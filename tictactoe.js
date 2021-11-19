@@ -142,7 +142,7 @@ const tictactoeGame =(playerX,playerO)=>{
     console.log('Status')
     console.log(theGrid,playerXGrid,playerOGrid,legalMove,moveNo,winner)
     }
-    return{playerX,playerO,playerMove,returnMove,checkGrid,playerX,playerO}
+    return{playerX,playerO,playerMove,returnMove,checkGrid}
 }
 function appendManyChild(Arr){
     parentSelector=document.getElementById('EnterPlayerName');
@@ -326,6 +326,3 @@ function gameStart(){
     })
 }
 gameStart();
-//let button = document.getElementById('newGame');
-//console.log(button)
-//button.addEventListener('click',newGame)
