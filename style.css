@@ -1,0 +1,23 @@
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.tictactoeBox{
+    padding: 50px;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    width:24px;
+    height: 24px;;
+}
+.tictactoeRow{
+    display: flex;
+}
+.InputNameStyle{
+    display: inline;
+}
+#PlayGameButton,.PlayGameButton{
+    display: inline;
+}
