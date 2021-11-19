@@ -1,11 +1,148 @@
 let childSelector;
 let parentSelector;
 let gameMode;
-function gameStart(){
-    let buttons=document.querySelectorAll('.gamePlay');
-    buttons.forEach((button)=>{
-        button.addEventListener('click',GamePlay)
-    })
+const tictactoeGame =(playerX,playerO)=>{
+    const theGrid = [['-','-','-'],['-','-','-'],['-','-','-']];
+    const playerXGrid =[['-','-','-'],['-','-','-'],['-','-','-']];
+    const playerOGrid =[['-','-','-'],['-','-','-'],['-','-','-']];
+    let Oturn=false;
+    let legalMove;
+    let moveNo=0;
+    let winner;
+    const NullGrid =()=>{
+        buttons= document.querySelectorAll('.tictactoeBox');
+        buttons.forEach((button)=>{
+            button.removeEventListener('click',addMove);
+            button.removeEventListener('click',addMoveAIvsHuman);
+        });
+    }
+    const checkGrid=()=>{
+        if (playerX=='AI' || playerO=='AI'){
+            if ((playerOGrid[0][0]=='O'&&playerOGrid[0][1]=='O'&&playerOGrid[0][2]=='O')||(playerOGrid[1][0]=='O'&&playerOGrid[1][1]=='O'&&playerOGrid[1][2]=='O')||(playerOGrid[2][0]=='O'&&playerOGrid[2][1]=='O'&&playerOGrid[2][2]=='O')||
+            (playerOGrid[0][0]=='O'&&playerOGrid[1][0]=='O'&&playerOGrid[2][0]=='O')||(playerOGrid[0][1]=='O'&&playerOGrid[1][1]=='O'&&playerOGrid[2][1]=='O')||(playerOGrid[0][2]=='O'&&playerOGrid[1][2]=='O'&&playerOGrid[2][2]=='O')||
+            (playerOGrid[0][0]=='O'&&playerOGrid[1][1]=='O'&&playerOGrid[2][2]=='O')||(playerOGrid[0][2]=='O'&&playerOGrid[1][1]=='O'&&playerOGrid[2][0]=='O')){
+                document.getElementById.removeEventListener
+                winner=true;
+                NullGrid()
+                return (`${playerO} wins`);
+            }
+            if ((playerXGrid[0][0]=='X'[0]&&playerXGrid[0][1]=='X'&&playerXGrid[0][2]=='X')||(playerXGrid[1][0]=='X'&&playerXGrid[1][1]=='X'&&playerXGrid[1][2]=='X')||(playerXGrid[2][0]=='X'&&playerXGrid[2][1]=='X'&&playerXGrid[2][2]=='X')||
+            (playerXGrid[0][0]=='X'&&playerXGrid[1][0]=='X'&&playerXGrid[2][0]=='X')||(playerXGrid[0][1]=='X'&&playerXGrid[1][1]=='X'&&playerXGrid[2][1]=='X')||(playerXGrid[0][2]=='X'&&playerXGrid[1][2]=='X'&&playerXGrid[2][2]=='X')||
+            (playerXGrid[0][0]=='X'&&playerXGrid[1][1]=='X'&&playerXGrid[2][2]=='X')||(playerXGrid[0][2]=='X'&&playerXGrid[1][1]=='X'&&playerXGrid[2][0]=='X')){
+                winner=true;
+                NullGrid()
+                return (`${playerX} wins`);
+            }
+            if (moveNo == 9){
+                return('Its a draw')
+            }
+            return "Game is still going on"
+        }
+        if (Oturn!=true){
+            if ((playerOGrid[0][0]=='O'&&playerOGrid[0][1]=='O'&&playerOGrid[0][2]=='O')||(playerOGrid[1][0]=='O'&&playerOGrid[1][1]=='O'&&playerOGrid[1][2]=='O')||(playerOGrid[2][0]=='O'&&playerOGrid[2][1]=='O'&&playerOGrid[2][2]=='O')||
+            (playerOGrid[0][0]=='O'&&playerOGrid[1][0]=='O'&&playerOGrid[2][0]=='O')||(playerOGrid[0][1]=='O'&&playerOGrid[1][1]=='O'&&playerOGrid[2][1]=='O')||(playerOGrid[0][2]=='O'&&playerOGrid[1][2]=='O'&&playerOGrid[2][2]=='O')||
+            (playerOGrid[0][0]=='O'&&playerOGrid[1][1]=='O'&&playerOGrid[2][2]=='O')||(playerOGrid[0][2]=='O'&&playerOGrid[1][1]=='O'&&playerOGrid[2][0]=='O')){
+                document.getElementById.removeEventListener
+                winner=true;
+                NullGrid()
+                return (`${playerO} wins`);
+            }
+        }else{
+            if ((playerXGrid[0][0]=='X'[0]&&playerXGrid[0][1]=='X'&&playerXGrid[0][2]=='X')||(playerXGrid[1][0]=='X'&&playerXGrid[1][1]=='X'&&playerXGrid[1][2]=='X')||(playerXGrid[2][0]=='X'&&playerXGrid[2][1]=='X'&&playerXGrid[2][2]=='X')||
+            (playerXGrid[0][0]=='X'&&playerXGrid[1][0]=='X'&&playerXGrid[2][0]=='X')||(playerXGrid[0][1]=='X'&&playerXGrid[1][1]=='X'&&playerXGrid[2][1]=='X')||(playerXGrid[0][2]=='X'&&playerXGrid[1][2]=='X'&&playerXGrid[2][2]=='X')||
+            (playerXGrid[0][0]=='X'&&playerXGrid[1][1]=='X'&&playerXGrid[2][2]=='X')||(playerXGrid[0][2]=='X'&&playerXGrid[1][1]=='X'&&playerXGrid[2][0]=='X')){
+                winner=true;
+                NullGrid()
+                return (`${playerX} wins`);
+            }
+        }
+        if (moveNo == 9){
+            return('Its a draw')
+        }
+        return "Game is still going on"
+    }
+    const switchTurn = ()=>{ 
+        if(!Oturn){
+            Oturn=true
+        }else{
+            Oturn=false
+        }
+    }
+    const returnMove =() =>{
+        console.log(legalMove)
+        if(Oturn){
+            if(legalMove==true){
+                switchTurn()
+                return 'O'
+            }else{
+                return 'X'
+            }
+        }else{
+            if(legalMove==true){
+                switchTurn()
+                    return 'X'
+                }else{
+                    return 'O'
+                }
+        }
+    }
+    const playerMove = (x,y) => {
+        console.log(theGrid);
+        console.log(playerOGrid);
+        console.log(playerXGrid);
+        if (Oturn==true){
+            if (playerO=='AI'){
+                let valid=false;
+                while (!valid){
+                    x= getRandomInt(0,2);
+                    y= getRandomInt(0,2);
+                    if ((theGrid[x][y]=='-')){
+                        valid=true;
+                    }
+                }
+                 
+            }else{
+            }
+            
+            if (theGrid[x][y]=='-'){
+                theGrid[x][y]='O';
+                playerOGrid[x][y]='O';
+                legalMove=true;
+                moveNo++
+                return ([x,y])
+            }else{
+                legalMove=false;
+            }
+
+        }else{
+            if (playerX=='AI'){
+                let valid=false;
+                while (!valid){
+                    x= getRandomInt(0,2);
+                    y= getRandomInt(0,2);
+                    if ((theGrid[x][y]=='-')){
+                        valid=true;
+                    }
+                }
+            }else{
+            }
+            if (theGrid[x][y]=='-'){
+                theGrid[x][y]='X';
+                playerXGrid[x][y]='X'
+                legalMove=true;
+                moveNo++;
+                return ([x,y])
+            }else{
+                legalMove=false;
+            }
+            Status()
+        }
+    }
+    function Status(){
+    console.log('Status')
+    console.log(theGrid,playerXGrid,playerOGrid,legalMove,moveNo,winner)
+    }
+    return{playerX,playerO,playerMove,returnMove,checkGrid,playerX,playerO}
 }
 function appendManyChild(Arr){
     parentSelector=document.getElementById('EnterPlayerName');
@@ -13,12 +150,31 @@ function appendManyChild(Arr){
         parentSelector.appendChild(Arr[i])
     }
 }
+function addMoveAIvsHuman(e){
+    let row=Number(e.target.dataset.row);
+    let column=Number(e.target.dataset.column);
+    gameMode.playerMove(row,column);
+    e.target.textContent=`${gameMode.returnMove()}`
+    let status= document.getElementById('Status');
+    if(gameMode.checkGrid()!='Game is still going on'){
+        status.textContent=`${gameMode.checkGrid()}`
+
+    }else{
+    status.textContent=`${gameMode.checkGrid()}`;
+    let tempArr = gameMode.playerMove(undefined,undefined);
+    let x= tempArr[0];
+    let y =tempArr[1];
+    gameMode.returnMove();
+    getBoxViaDataValues(x,y)
+    
+    status.textContent=`${gameMode.checkGrid()}`;
+    }
+}
 function AIGameMode(e){
     tictactoeGrid('AI')
     let GameStart = e.target.id;
     let UserName= document.getElementById('Player').value;
     if (GameStart=='PlayGameO'){
-
         gameMode=tictactoeGame('AI',UserName);
         let tempArr = gameMode.playerMove(undefined,undefined);
         let x= tempArr[0];
@@ -131,8 +287,14 @@ function getBoxViaDataValues(x,y){
     Boxes.forEach((button)=>{
         console.log('started')
         if (button.dataset.row == x && button.dataset.column == y){
-            button.textContent='X';
-            console.log("DOne")
+            if(gameMode.playerX=='AI'){
+                button.textContent='X';
+                console.log("DOne")
+            }else{
+                button.textContent='O';
+                console.log("DOne")
+            }
+            
         }
     })
 }
@@ -157,146 +319,11 @@ function addMove(e){
     status.textContent=`${gameMode.checkGrid()}`;
 }
 
-function addMoveAIvsHuman(e){
-    let row=Number(e.target.dataset.row);
-    let column=Number(e.target.dataset.column);
-    gameMode.playerMove(row,column);
-    gameMode.playerMove(row,column);
-    e.target.textContent=`${gameMode.returnMove()}`
-    let status= document.getElementById('Status');
-    status.textContent=`${gameMode.checkGrid()}`;
-}
-
-const tictactoeGame =(playerX,playerO)=>{
-    const theGrid = [['-','-','-'],['-','-','-'],['-','-','-']];
-    const playerXGrid =[['-','-','-'],['-','-','-'],['-','-','-']];
-    const playerOGrid =[['-','-','-'],['-','-','-'],['-','-','-']];
-    let Oturn=false;
-    let legalMove;
-    let moveNo=0;
-    let winner;
-    const NullGrid =()=>{
-        buttons= document.querySelectorAll('.tictactoeBox');
-        buttons.forEach((button)=>{
-            button.removeEventListener('click',addMove);
-        });
-    }
-    const checkGrid=()=>{
-        if (Oturn!=true){
-            if ((playerOGrid[0][0]=='O'&&playerOGrid[0][1]=='O'&&playerOGrid[0][2]=='O')||(playerOGrid[1][0]=='O'&&playerOGrid[1][1]=='O'&&playerOGrid[1][2]=='O')||(playerOGrid[2][0]=='O'&&playerOGrid[2][1]=='O'&&playerOGrid[2][2]=='O')||
-            (playerOGrid[0][0]=='O'&&playerOGrid[1][0]=='O'&&playerOGrid[2][0]=='O')||(playerOGrid[0][1]=='O'&&playerOGrid[1][1]=='O'&&playerOGrid[2][1]=='O')||(playerOGrid[0][2]=='O'&&playerOGrid[1][2]=='O'&&playerOGrid[2][2]=='O')||
-            (playerOGrid[0][0]=='O'&&playerOGrid[1][1]=='O'&&playerOGrid[2][2]=='O')||(playerOGrid[0][2]=='O'&&playerOGrid[1][1]=='O'&&playerOGrid[2][0]=='O')){
-                document.getElementById.removeEventListener
-                winner=true;
-                NullGrid()
-                return (`${playerO} wins`);
-            }
-        }else{
-            if ((playerXGrid[0][0]=='X'[0]&&playerXGrid[0][1]=='X'&&playerXGrid[0][2]=='X')||(playerXGrid[1][0]=='X'&&playerXGrid[1][1]=='X'&&playerXGrid[1][2]=='X')||(playerXGrid[2][0]=='X'&&playerXGrid[2][1]=='X'&&playerXGrid[2][2]=='X')||
-            (playerXGrid[0][0]=='X'&&playerXGrid[1][0]=='X'&&playerXGrid[2][0]=='X')||(playerXGrid[0][1]=='X'&&playerXGrid[1][1]=='X'&&playerXGrid[2][1]=='X')||(playerXGrid[0][2]=='X'&&playerXGrid[1][2]=='X'&&playerXGrid[2][2]=='X')||
-            (playerXGrid[0][0]=='X'&&playerXGrid[1][1]=='X'&&playerXGrid[2][2]=='X')||(playerXGrid[0][2]=='X'&&playerXGrid[1][1]=='X'&&playerXGrid[2][0]=='X')){
-                winner=true;
-                NullGrid()
-                return (`${playerX} wins`);
-            }
-        }
-        if (moveNo == 9){
-            return('Its a draw')
-        }
-        return "Game is still going on"
-    }
-    const switchTurn = ()=>{ 
-        if(!Oturn){
-            Oturn=true
-        }else{
-            Oturn=false
-        }
-    }
-    const returnMove =() =>{
-        console.log(legalMove)
-        if(Oturn){
-            if(legalMove==true){
-                console.log(1)
-                switchTurn()
-                return 'O'
-            }else{
-                console.log(2)
-                return 'X'
-            }
-        }else{
-            if(legalMove==true){
-                console.log(3)
-                switchTurn()
-                    return 'X'
-                }else{
-                    console.log(4)
-                    return 'O'
-                }
-        }
-    }
-    const playerMove = (x,y) => {
-        console.log(theGrid);
-        console.log(playerOGrid);
-        console.log(playerXGrid);
-        if (Oturn==true){
-            if (playerO=='AI'){
-                let valid=false;
-                while (!valid){
-                    x= getRandomInt(0,2);
-                    y= getRandomInt(0,2);
-                    if ((theGrid[x][y]=='-')){
-                        valid=true;
-                    }
-                }
-                console.log('AI DONE THINGING')
-                 
-            }else{
-                console.log(theGrid[x][y])
-            }
-            console.log('O is not executed')
-            
-            if (theGrid[x][y]=='-'){
-                console.log('O is executed')
-                theGrid[x][y]='O';
-                playerOGrid[x][y]='O';
-                legalMove=true;
-                moveNo++
-                return ([x,y])
-            }else{
-                console.log('Enter a legal Move')
-                legalMove=false;
-            }
-
-        }else{
-            if (playerX=='AI'){
-                let valid=false;
-                while (!valid){
-                    x= getRandomInt(0,2);
-                    y= getRandomInt(0,2);
-                    if ((theGrid[x][y]=='-')){
-                        valid=true;
-                    }
-                }
-                console.log('AI DONE THINGING')
-            }else{
-                console.log(theGrid[x][y])
-            }
-            console.log('X is not executed')
-            if (theGrid[x][y]=='-'){
-                console.log('X is executed')
-                theGrid[x][y]='X';
-                playerXGrid[x][y]='X'
-                legalMove=true;
-                moveNo++;
-                return ([x,y])
-            }else{
-                console.log('Enter a legal Move')
-                legalMove=false;
-            }
-            console.log('hellOWord')
-        }
-    }
-    return{playerX,playerO,playerMove,returnMove,checkGrid}
+function gameStart(){
+    let buttons=document.querySelectorAll('.gamePlay');
+    buttons.forEach((button)=>{
+        button.addEventListener('click',GamePlay)
+    })
 }
 gameStart();
 //let button = document.getElementById('newGame');
