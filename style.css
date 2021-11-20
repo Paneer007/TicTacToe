@@ -3,6 +3,9 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin:0px;
+    padding:0px;
+    background-color: #1D3557;
 }
 .tictactoeBox{
     padding: 50px;
@@ -10,14 +13,64 @@ body{
     border-color: black;
     border-style: solid;
     width:24px;
-    height: 24px;;
+    height: 24px;
+    background-color: #f1faee;
+    border-radius: 5px;
 }
 .tictactoeRow{
     display: flex;
 }
 .InputNameStyle{
-    display: inline;
+    display: inline-block;
 }
-#PlayGameButton,.PlayGameButton{
-    display: inline;
+.PlayGameButton,.gamePlay{
+    display: inline-block;
+}
+.gamePlay,.PlayGameButton,.PlayAgain{
+    padding: 8px;
+    background-color: lightgrey;
+    margin:8px;
+    border-radius: 8px;
+    text-align: center;
+    width: fit-content;
+}
+.HeaderDiv{
+    text-align: center;
+}
+.gamePlayButtons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+#EnterPlayerName{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #A8DADC;
+    padding: 8px;
+    margin: 8px;
+    border-radius: 8px;
+    width:360px;
+
+}
+.HeaderDiv{
+    width:100%;
+    position: relative;
+    text-align: center;
+    background-color: #457B9D;
+}
+.tictactoeGAme{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.theGrid{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

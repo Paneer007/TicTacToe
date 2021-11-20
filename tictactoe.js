@@ -69,7 +69,6 @@ const tictactoeGame =(playerX,playerO)=>{
         }
     }
     const returnMove =() =>{
-        console.log(legalMove)
         if(Oturn){
             if(legalMove==true){
                 switchTurn()
@@ -87,9 +86,6 @@ const tictactoeGame =(playerX,playerO)=>{
         }
     }
     const playerMove = (x,y) => {
-        console.log(theGrid);
-        console.log(playerOGrid);
-        console.log(playerXGrid);
         if (Oturn==true){
             if (playerO=='AI'){
                 let valid=false;
@@ -135,21 +131,18 @@ const tictactoeGame =(playerX,playerO)=>{
             }else{
                 legalMove=false;
             }
-            Status()
         }
-    }
-    function Status(){
-    console.log('Status')
-    console.log(theGrid,playerXGrid,playerOGrid,legalMove,moveNo,winner)
     }
     return{playerX,playerO,playerMove,returnMove,checkGrid}
 }
+
 function appendManyChild(Arr){
     parentSelector=document.getElementById('EnterPlayerName');
     for (let i=0;i<Arr.length;i++){
         parentSelector.appendChild(Arr[i])
     }
 }
+
 function addMoveAIvsHuman(e){
     let row=Number(e.target.dataset.row);
     let column=Number(e.target.dataset.column);
@@ -158,43 +151,49 @@ function addMoveAIvsHuman(e){
     let status= document.getElementById('Status');
     if(gameMode.checkGrid()!='Game is still going on'){
         status.textContent=`${gameMode.checkGrid()}`
-
     }else{
     status.textContent=`${gameMode.checkGrid()}`;
     let tempArr = gameMode.playerMove(undefined,undefined);
     let x= tempArr[0];
     let y =tempArr[1];
     gameMode.returnMove();
-    getBoxViaDataValues(x,y)
-    
+    getBoxViaDataValues(x,y);
     status.textContent=`${gameMode.checkGrid()}`;
     }
 }
+
 function AIGameMode(e){
-    tictactoeGrid('AI')
     let GameStart = e.target.id;
     let UserName= document.getElementById('Player').value;
-    if (GameStart=='PlayGameO'){
-        gameMode=tictactoeGame('AI',UserName);
-        let tempArr = gameMode.playerMove(undefined,undefined);
-        let x= tempArr[0];
-        let y =tempArr[1];
-        getBoxViaDataValues(x,y)
-        gameMode.returnMove();
-        gameMode.checkGrid()
+    if (UserName==''){
+        alert('Enter your username')
     }else{
-        gameMode=tictactoeGame(UserName,'AI');
+        tictactoeGrid('AI')
+        if (GameStart=='PlayGameO'){
+            gameMode=tictactoeGame('AI',UserName);
+            let tempArr = gameMode.playerMove(undefined,undefined);
+            let x= tempArr[0];
+            let y =tempArr[1];
+            getBoxViaDataValues(x,y)
+            gameMode.returnMove();
+            gameMode.checkGrid()
+        }else{
+            gameMode=tictactoeGame(UserName,'AI');
+        }
     }
 }
+
 function humanVsAI(){
     parentSelector=document.getElementById('EnterPlayerName');
     parentSelector.innerHTML='';
     parentSelector=document.getElementById('theGrid');
     parentSelector.innerHTML='';
+    parentSelector=document.getElementById('Status');
+    parentSelector.innerHTML='';
     let name= document.createElement('p');
     let nameInput = document.createElement('input');
-    let PlayGameX=document.createElement('button');
-    let PlayGameO=document.createElement('button');
+    let PlayGameX=document.createElement('div');
+    let PlayGameO=document.createElement('div');
     let choose=document.createElement('p');
     appendManyChild([name,nameInput,choose,PlayGameX,PlayGameO]);
     name.textContent='Enter Player Game';
@@ -210,19 +209,23 @@ function humanVsAI(){
     let buttons =document.querySelectorAll('.PlayGameButton');
     buttons.forEach((button)=>{
         button.addEventListener('click',AIGameMode)
-    })    
+    })
+    ColorButton('PlayGameButton') 
 }
+
 function nameOfPlayer(){
     parentSelector=document.getElementById('EnterPlayerName');
+    console.log(parentSelector)
     parentSelector.innerHTML='';
     parentSelector=document.getElementById('theGrid');
     parentSelector.innerHTML='';
-    console.log('executed')
+    parentSelector=document.getElementById('Status');
+    parentSelector.innerHTML='';
     let name1 = document.createElement('p');
     let name2 = document.createElement('p');
     let name1Input= document.createElement('input');
     let name2Input = document.createElement('input');
-    let PlayGame = document.createElement('button')
+    let PlayGame = document.createElement('div');
     appendManyChild([name1,name1Input,name2,name2Input,PlayGame]);
     name1.textContent='Enter Player 1 Name (will play X)';
     name2.textContent='Enter Player 2 Name (will play O)';
@@ -231,12 +234,20 @@ function nameOfPlayer(){
     name1Input.setAttribute('id','PlayerX');
     name2Input.setAttribute('id','PlayerO');
     PlayGame.textContent='PlayGame/Play Again';
-    PlayGame.setAttribute('id','PlayGameButton')
+    PlayGame.setAttribute('id','PlayGameButton');
+    PlayGame.className='PlayAgain'
     PlayGame.addEventListener('click', newGame)
+    ColorButton('PlayAgain');
 }
+
 function GamePlay(e){
     let buttonValue=e.target.id;
     if (buttonValue=='TwoPlayer'){
+        let check=document.getElementById('EnterPlayerName');
+        if (check!= null){
+            let parentSelector=document.getElementById('tictactoeGame');
+            parentSelector.removeChild(check)
+        }
         let parentSelector=document.getElementById('tictactoeGame');
         let childSelector=document.createElement('div');
         let gameDiv=document.getElementById('theGrid');
@@ -244,6 +255,11 @@ function GamePlay(e){
         childSelector.setAttribute('id','EnterPlayerName');
         nameOfPlayer();
     }else{
+        let check=document.getElementById('EnterPlayerName');
+        if (check!= null){
+            let parentSelector=document.getElementById('tictactoeGame');
+            parentSelector.removeChild(check)
+        }
         let parentSelector=document.getElementById('tictactoeGame');
         let childSelector=document.createElement('div');
         let gameDiv=document.getElementById('theGrid');
@@ -252,11 +268,13 @@ function GamePlay(e){
         humanVsAI()
     }
 }
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
 function tictactoeGrid(event=undefined){
     parentSelector=document.getElementById('theGrid');
     parentSelector.innerHTML='';
@@ -285,19 +303,17 @@ function tictactoeGrid(event=undefined){
 function getBoxViaDataValues(x,y){
     let Boxes = document.querySelectorAll('.tictactoeBox');
     Boxes.forEach((button)=>{
-        console.log('started')
         if (button.dataset.row == x && button.dataset.column == y){
             if(gameMode.playerX=='AI'){
                 button.textContent='X';
-                console.log("DOne")
             }else{
                 button.textContent='O';
-                console.log("DOne")
             }
             
         }
     })
 }
+
 function newGame(e){
     let PlayerX=document.getElementById('PlayerX').value;
     let PlayerO=document.getElementById('PlayerO').value;
@@ -325,4 +341,29 @@ function gameStart(){
         button.addEventListener('click',GamePlay)
     })
 }
+
+function darken(e){
+    e.target.style.backgroundColor='pink';   
+}
+
+function lighten(e){
+    e.target.style.backgroundColor='lightgrey';
+}
+
+function darkest(e){
+    e.target.style.backgroundColor='darkgrey';
+}
+
+function ColorButton(style){
+    buttons = document.querySelectorAll(`.${style}`);
+    buttons.forEach((button)=>{
+        button.addEventListener('mouseover',darken);
+        button.addEventListener('mouseout',lighten);
+        button.addEventListener('mousedown',darkest);
+        button.addEventListener('mouseup',lighten)
+
+    })
+}
+
 gameStart();
+ColorButton('gamePlay');

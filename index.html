@@ -8,23 +8,19 @@
     <link href='style.css' rel='stylesheet'>
 </head>
 <body>
-    <div>
-        <div>
-            <h1>Welcome to tictactoe Website</h1>
-        </div>
-        <div>
-            <button class ='gamePlay' id='TwoPlayer'>Two Player</button>
-            <button class ='gamePlay' id='OnePlayer'>Player vs Ai</button>
-            <!--<button id='newGame'>Click me for  a new game</button>-->
-        </div>
+    <div id='HeaderDiv' class='HeaderDiv'>
+        <h1 class='Header'>Welcome to tictactoe Website</h1>
     </div>
-    <div id='tictactoeGame'>
-        <div id='theGrid'>
+    <div id ='gamePlayButtons' class="gamePlayButtons"> 
+        <div class ='gamePlay' id='TwoPlayer'>Two Player</div>
+        <div class ='gamePlay' id='OnePlayer'>Player vs Ai</div>
+    </div>
+</div>
+<div id='tictactoeGame' class ='tictactoeGame'>
+    <div id='theGrid' class='theGrid'>
 
-        </div>
-        <p id='Status'></p>
-        <div id='theFinal'></div>
     </div>
+    <p id='Status' class='Status'></p>
     <script src='tictactoe.js'></script>
 </body>
 </html>
