@@ -343,7 +343,7 @@ function gameStart(){
 }
 
 function darken(e){
-    e.target.style.backgroundColor='pink';   
+    e.target.style.backgroundColor='#E63946';   
 }
 
 function lighten(e){
@@ -361,7 +361,6 @@ function ColorButton(style){
         button.addEventListener('mouseout',lighten);
         button.addEventListener('mousedown',darkest);
         button.addEventListener('mouseup',lighten)
-
     })
 }
 
